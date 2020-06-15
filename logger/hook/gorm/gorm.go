@@ -3,9 +3,9 @@ package gorm
 import (
 	"time"
 
-	"github.com/LyricTian/gin-admin/v6/pkg/logger"
-	"github.com/LyricTian/gin-admin/v6/pkg/util"
 	"github.com/jinzhu/gorm"
+	"github.com/ops-cn/common/logger"
+	"github.com/ops-cn/common/util"
 	"github.com/sirupsen/logrus"
 )
 

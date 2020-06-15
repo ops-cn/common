@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/LyricTian/queue"
+	"github.com/ops-cn/common/queue"
 	"github.com/sirupsen/logrus"
 )
 
