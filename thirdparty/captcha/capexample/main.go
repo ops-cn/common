@@ -12,7 +12,7 @@ import (
 	"net/http"
 	"text/template"
 
-	"github.com/ops-cn/common/captcha"
+	"github.com/ops-cn/common/thirdparty/captcha"
 )
 
 var formTemplate = template.Must(template.New("example").Parse(formTemplateSrc))

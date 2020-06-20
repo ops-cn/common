@@ -52,7 +52,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/ops-cn/common/captcha/store"
+	"github.com/ops-cn/common/thirdparty/captcha/store"
 )
 
 const (

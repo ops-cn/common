@@ -3,7 +3,6 @@ module github.com/ops-cn/common
 go 1.14
 
 require (
-	github.com/LyricTian/structs v1.1.1
 	github.com/bwmarrin/snowflake v0.3.0
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/fatih/camelcase v1.0.0 // indirect

@@ -3,7 +3,7 @@ package util
 import (
 	"reflect"
 
-	"github.com/LyricTian/structs"
+	"github.com/ops-cn/common/thirdparty/structs"
 )
 
 // StructMapToStruct 结构体映射

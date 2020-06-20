@@ -12,7 +12,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/ops-cn/common/captcha"
+	"github.com/ops-cn/common/thirdparty/captcha"
 )
 
 var (
