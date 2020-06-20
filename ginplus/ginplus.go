@@ -1,16 +1,12 @@
-package unified
+package ginplus
 
 import (
-	"context"
-	"encoding/json"
 	"fmt"
-	"github.com/gin-gonic/gin"
-	"github.com/gin-gonic/gin/binding"
-
-	"github.com/micro/go-micro/v2/metadata"
 	"net/http"
 	"strings"
 
+	"github.com/gin-gonic/gin"
+	"github.com/gin-gonic/gin/binding"
 	"github.com/ops-cn/common/errors"
 	"github.com/ops-cn/common/logger"
 	"github.com/ops-cn/common/schema"
@@ -19,52 +15,46 @@ import (
 
 // 定义上下文中的键
 const (
-	prefix           = "ops-cn"
+	prefix           = "gin-admin"
 	UserIDKey        = prefix + "/user-id"
 	ReqBodyKey       = prefix + "/req-body"
 	ResBodyKey       = prefix + "/res-body"
 	LoggerReqBodyKey = prefix + "/logger-req-body"
 )
 
-const (
-	BASIC_SCHEMA  string = "Basic "
-	BEARER_SCHEMA string = "Bearer "
-)
-
 // GetToken 获取用户令牌
-func GetToken(ctx context.Context) string {
-	md, _ := metadata.FromContext(ctx)
+func GetToken(c *gin.Context) string {
 	var token string
-	auth := md["Authorization"]
-	if auth != "" && strings.HasPrefix(auth, BEARER_SCHEMA) {
+	auth := c.GetHeader("Authorization")
+	prefix := "Bearer "
+	if auth != "" && strings.HasPrefix(auth, prefix) {
 		token = auth[len(prefix):]
 	}
 	return token
 }
 
 // GetUserID 获取用户ID
-func GetUserID(ctx context.Context) string {
-	md, _ := metadata.FromContext(ctx)
-	return md[UserIDKey]
+func GetUserID(c *gin.Context) string {
+	return c.GetString(UserIDKey)
 }
 
 // SetUserID 设定用户ID
-func SetUserID(ctx context.Context, userID string) {
-	md, ok := metadata.FromContext(ctx)
-	if !ok {
-		md = metadata.Metadata{}
+func SetUserID(c *gin.Context, userID string) {
+	c.Set(UserIDKey, userID)
+}
+
+// GetBody Get request body
+func GetBody(c *gin.Context) []byte {
+	if v, ok := c.Get(ReqBodyKey); ok {
+		if b, ok := v.([]byte); ok {
+			return b
+		}
 	}
-	md[UserIDKey] = userID
+	return nil
 }
 
 // ParseJSON 解析请求JSON
-func ParseJSON(ctx context.Context, obj interface{}) error {
-	md, ok := metadata.FromContext(ctx)
-	if !ok {
-		md = metadata.Metadata{}
-	}
-	m := make(map[string]string)
-	json.Unmarshal(obj, m)
+func ParseJSON(c *gin.Context, obj interface{}) error {
 	if err := c.ShouldBindJSON(obj); err != nil {
 		return errors.Wrap400Response(err, fmt.Sprintf("解析请求参数发生错误 - %s", err.Error()))
 	}
@@ -73,7 +63,6 @@ func ParseJSON(ctx context.Context, obj interface{}) error {
 
 // ParseQuery 解析Query参数
 func ParseQuery(c *gin.Context, obj interface{}) error {
-	md, ok := metadata.FromContext(c)
 	if err := c.ShouldBindQuery(obj); err != nil {
 		return errors.Wrap400Response(err, fmt.Sprintf("解析请求参数发生错误 - %s", err.Error()))
 	}
