@@ -1,10 +1,10 @@
-package util
+package noworker
 
 import (
 	"github.com/ops-cn/common/config"
 	"github.com/ops-cn/common/logger"
+	"github.com/ops-cn/common/noworker/unique"
 	"github.com/ops-cn/common/trace"
-	"github.com/ops-cn/common/util/unique"
 )
 
 var idFunc = func() string {
