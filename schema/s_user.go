@@ -2,10 +2,10 @@ package schema
 
 import (
 	"context"
-	"time"
-
 	"github.com/ops-cn/common/config"
 	"github.com/ops-cn/common/util"
+	userPB "github.com/ops-cn/proto/admin/user"
+	"time"
 )
 
 // GetRootUser 获取root用户
