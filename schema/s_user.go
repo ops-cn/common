@@ -9,9 +9,9 @@ import (
 )
 
 // GetRootUser 获取root用户
-func GetRootUser() *User {
+func GetRootUser() *userPB.User {
 	user := config.C.Root
-	return &User{
+	return &userPB.User{
 		ID:       user.UserName,
 		UserName: user.UserName,
 		RealName: user.RealName,
